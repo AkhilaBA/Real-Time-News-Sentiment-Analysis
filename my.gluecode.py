@@ -32,7 +32,8 @@ kafka_df = spark.readStream \
     .format("kafka") \
     .option("kafka.bootstrap.servers", "EC2 public ip:9092") \
     .option("subscribe", "topic-name") \
-    .option("startingOffsets", "earliest") \
+    .option("startingOffsets", "latest") \
+    .option("failOnDataLoss","false") \
     .load()
 
 parsed_df = kafka_df.selectExpr("CAST(value AS STRING) as json_value") \
